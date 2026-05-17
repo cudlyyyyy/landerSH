@@ -265,7 +265,7 @@
   </style>
 </head>
 <body>
-  <a href="https://giftclick.org/aff_c?offer_id=1146&aff_id=4344" id="redirect-link" style="display:none;"></a>
+  <a href="#" id="redirect-link" style="display:none;"></a>
   
   <main>
     <div class="card">
@@ -314,7 +314,7 @@
           </div>
         </div>
         
-        <a href="https://giftclick.org/aff_c?offer_id=1146&aff_id=4344" class="btn btn-orange">Get Your $750 →</a>
+        <a href="#" id="offer-btn" class="btn btn-orange">Get Your $750 →</a>
         
         <div class="trustpilot">
           <span class="trust-text">Excellent 4.5/5</span>
@@ -340,16 +340,33 @@
   </footer>
   
   <script>
+    const params = new URLSearchParams(window.location.search);
+    const source = params.get("source") || "default";
+    const offerBase = "https://giftclick.org/aff_c?offer_id=127&aff_id=22427";
+
+    function buildOfferUrl() {
+      const separator = offerBase.includes("?") ? "&" : "?";
+      return offerBase + separator + "source=" + encodeURIComponent(source);
+    }
+
+    function updateOfferLinks() {
+      const finalUrl = buildOfferUrl();
+      const redirectLink = document.getElementById("redirect-link");
+      const offerBtn = document.getElementById("offer-btn");
+
+      if (redirectLink) redirectLink.href = finalUrl;
+      if (offerBtn) offerBtn.href = finalUrl;
+    }
+
     function goToStep2() {
       const select = document.getElementById('device-select');
       if (select.value) {
         document.getElementById('step1').classList.add('hidden');
         document.getElementById('step2').classList.remove('hidden');
-        setTimeout(() => {
-          document.getElementById('progress2').style.width = '77%';
-        }, 100);
       }
     }
+
+    updateOfferLinks();
   </script>
 </body>
 </html>
